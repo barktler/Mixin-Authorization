@@ -21,7 +21,7 @@ export const createBearerAuthorizationMixin = (options: BearerAuthorizationMixin
         ...options,
     };
 
-    if (typeof mergedOptions.getTokenFunction !== 'undefined') {
+    if (typeof mergedOptions.getTokenFunction !== 'function') {
         throw new Error("[Barktler-Authorization-Mixin] Get Token Function must be Function");
     }
 
