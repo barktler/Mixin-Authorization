@@ -1,0 +1,43 @@
+{
+  "name": "@barktler/mixin-authorization",
+  "version": "1.0.0",
+  "description": ":fireworks: Authorization Mixin for Barktler",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barktler/Mixin-Authorization.git"
+  },
+  "keywords": [
+    "API"
+  ],
+  "author": "WMXPY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/barktler/Mixin-Authorization/issues"
+  },
+  "homepage": "https://github.com/barktler/Mixin-Authorization#readme",
+  "peerDependencies": {
+    "@barktler/core": "*"
+  },
+  "devDependencies": {
+    "@barktler/core": "2.9.1",
+    "@barktler/driver-mock": "^3.0.2",
+    "@sudoo/io": "^1.8.0",
+    "@sudoo/pattern": "^1.6.1",
+    "@sudoo/triforce": "^2.9.7"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "instrument": true,
+    "reporter": [
+      "json",
+      "text-summary"
+    ],
+    "report-dir": "coverage",
+    "sourceMap": true
+  }
+}
