@@ -15,7 +15,7 @@ describe('Given [createBearerAuthorizationMixin] function', (): void => {
 
     const chance: Chance.Chance = new Chance('authorization-authorization');
 
-    it('should be able to trim request body', async (): Promise<void> => {
+    it('should be able to add bearer authorization', async (): Promise<void> => {
 
         let requestHeaders: Record<string, any> | undefined;
 
@@ -34,7 +34,7 @@ describe('Given [createBearerAuthorizationMixin] function', (): void => {
 
         expect(typeof response.hello).to.be.equal('string');
         expect(requestHeaders).to.be.deep.equal({
-            Authorization: token,
+            Authorization: `bearer ${token}`,
         });
     });
 });

@@ -21,6 +21,10 @@ export const createBearerAuthorizationMixin = (options: BearerAuthorizationMixin
         ...options,
     };
 
+    if (typeof mergedOptions.getTokenFunction !== 'undefined') {
+        throw new Error("[Barktler-Authorization-Mixin] Get Token Function must be Function");
+    }
+
     return (instance: Barktler) => {
 
         instance.preHook.processor.add(async (request: IRequestConfig): Promise<IRequestConfig> => {
@@ -30,7 +34,7 @@ export const createBearerAuthorizationMixin = (options: BearerAuthorizationMixin
                 ...request,
                 headers: {
                     ...request.headers,
-                    Authorization: token,
+                    Authorization: `bearer ${token}`,
                 },
             };
         });
