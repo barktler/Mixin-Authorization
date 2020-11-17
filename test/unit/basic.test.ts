@@ -1,28 +1,28 @@
 /**
  * @author WMXPY
  * @namespace Authorization
- * @description Bearer
+ * @description Basic
  * @override Unit
  */
 
 import { IRequestConfig } from "@barktler/core";
 import { expect } from "chai";
 import * as Chance from "chance";
-import { createBearerAuthorizationMixin } from "../../src";
+import { createBasicAuthorizationMixin } from "../../src";
 import { ExampleAPI, ExampleAPIResponse } from "../mock/example";
 
 describe('Given [createBearerAuthorizationMixin] function', (): void => {
 
-    const chance: Chance.Chance = new Chance('authorization-bearer');
+    const chance: Chance.Chance = new Chance('authorization-basic');
 
-    it('should be able to add bearer authorization', async (): Promise<void> => {
+    it('should be able to add basic authorization', async (): Promise<void> => {
 
         let requestHeaders: Record<string, any> | undefined;
 
         const token: string = chance.string();
 
         const api: ExampleAPI = new ExampleAPI();
-        api.useMixin(createBearerAuthorizationMixin({
+        api.useMixin(createBasicAuthorizationMixin({
             getTokenFunction: () => token,
         }));
 
@@ -34,7 +34,7 @@ describe('Given [createBearerAuthorizationMixin] function', (): void => {
 
         expect(typeof response.hello).to.be.equal('string');
         expect(requestHeaders).to.be.deep.equal({
-            Authorization: `bearer ${token}`,
+            Authorization: `basic ${Buffer.from(token, 'binary').toString('base64')}`,
         });
     });
 });
