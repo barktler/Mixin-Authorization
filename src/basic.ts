@@ -5,6 +5,7 @@
  */
 
 import { Barktler, BarktlerMixin, IRequestConfig } from "@barktler/core";
+import { crossPlatformBToA } from "./util";
 
 export type BasicAuthorizationMixinOptions = {
 
@@ -34,11 +35,16 @@ export const createBasicAuthorizationMixin = (options: BasicAuthorizationMixinOp
         instance.preHook.processor.add(async (request: IRequestConfig): Promise<IRequestConfig> => {
 
             const token: string = await mergedOptions.getTokenFunction();
+
+            const base64Token: string = mergedOptions.base64
+                ? crossPlatformBToA(token)
+                : token;
+
             return {
                 ...request,
                 headers: {
                     ...request.headers,
-                    Authorization: `basic ${token}`,
+                    Authorization: `basic ${base64Token}`,
                 },
             };
         });
