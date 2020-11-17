@@ -15,6 +15,31 @@ yarn add @barktler/mixin-authorization
 npm install @barktler/mixin-authorization --save
 ```
 
+## Bearer Authorization
+
+```ts
+import { createBearerAuthorizationMixin } from "@barktler/mixin-authorization";
+import { YourAPI } from "somewhere";
+
+const api: YourAPI = new YourAPI();
+api.useMixin(createBearerAuthorizationMixin({
+    getTokenFunction: async () => getYourToken(),
+}));
+```
+
+## Basic Authorization
+
+```ts
+import { createBasicAuthorizationMixin } from "@barktler/mixin-authorization";
+import { YourAPI } from "somewhere";
+
+const api: YourAPI = new YourAPI();
+api.useMixin(createBasicAuthorizationMixin({
+    getTokenFunction: async () => getYourToken(),
+    base64: true, // default true, false for not encode
+}));
+```
+
 ## Documents
 
 See [Barktler Documents](//barktler.com).
