@@ -37,4 +37,30 @@ describe('Given [createBearerAuthorizationMixin] function', (): void => {
             Authorization: `basic ${Buffer.from(token, 'binary').toString('base64')}`,
         });
     });
+
+    it('should be able to add basic authorization with stringify', async (): Promise<void> => {
+
+        let requestHeaders: Record<string, any> | undefined;
+
+        const token: any = {
+            username: chance.string(),
+            password: chance.string(),
+        };
+
+        const api: ExampleAPI = new ExampleAPI();
+        api.useMixin(createBasicAuthorizationMixin({
+            getTokenFunction: () => token,
+        }));
+
+        api.preHook.sideEffect.add((data: IRequestConfig) => {
+            requestHeaders = data.headers;
+        });
+
+        const response: ExampleAPIResponse = await api.fetch();
+
+        expect(typeof response.hello).to.be.equal('string');
+        expect(requestHeaders).to.be.deep.equal({
+            Authorization: `basic ${Buffer.from(JSON.stringify(token), 'binary').toString('base64')}`,
+        });
+    });
 });

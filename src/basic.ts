@@ -34,7 +34,11 @@ export const createBasicAuthorizationMixin = (options: BasicAuthorizationMixinOp
 
         instance.preHook.processor.add(async (request: IRequestConfig): Promise<IRequestConfig> => {
 
-            const token: string = await mergedOptions.getTokenFunction();
+            const rawToken: any = await mergedOptions.getTokenFunction();
+
+            const token: string = typeof rawToken === 'string'
+                ? rawToken
+                : JSON.stringify(rawToken);
 
             const base64Token: string = mergedOptions.base64
                 ? crossPlatformBToA(token)
